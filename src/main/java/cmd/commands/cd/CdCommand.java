@@ -24,10 +24,6 @@ public class CdCommand implements Runnable {
     @Parameters(index = "0", description = "absolute path of the directory to change to")
     private File path;
 
-    /*public CdCommand() {
-
-    }*/
-
     @Override
     public void run() {
         if(path.exists() && path.isDirectory() && path.isAbsolute())
