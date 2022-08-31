@@ -1,12 +1,14 @@
 package cmd.commands.dir;
 
 import cmd.SimpleCmd;
+import com.sun.deploy.net.MessageHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
@@ -26,7 +28,7 @@ import static picocli.CommandLine.Option;
         mixinStandardHelpOptions = true)
 public class DirCommand implements Runnable {
 
-    @CommandLine.Parameters(index = "0", description = "path of the files and folders to list")
+    @CommandLine.Parameters(index = "0", description = "path of the files and folders to list", defaultValue = ".")
     private static File anyLocation ;
 
     private static final Logger LOG = LoggerFactory.getLogger(DirCommand.class);
@@ -42,7 +44,7 @@ public class DirCommand implements Runnable {
 
     @Override
     public void run() {
-        if (anyLocation.isDirectory()) {
+        if (anyLocation.isAbsolute()) {
             listFilesInDirectory(anyLocation);
         } else {
             listFilesInDirectory(SimpleCmd.getCurrentLocation());
