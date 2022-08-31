@@ -4,6 +4,8 @@ import cmd.SimpleCmd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
+import sun.rmi.runtime.Log;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,6 +28,10 @@ public class MkdirCommand implements Runnable{
     @SuppressWarnings("java:S112")
     public void run() {
         Path toCreate = SimpleCmd.getCurrentLocation().toPath().resolve(Paths.get(pathToFileOrDirectory));
+        if (toCreate.toFile().exists()){
+            LOG.info(toCreate.toAbsolutePath() + " existiert schon.");
+            return;
+        }
         try {
                 if (!isFile) {
                     Files.createDirectories(toCreate);
