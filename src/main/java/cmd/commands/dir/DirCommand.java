@@ -1,7 +1,6 @@
 package cmd.commands.dir;
 
 import cmd.SimpleCmd;
-import com.sun.deploy.net.MessageHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
