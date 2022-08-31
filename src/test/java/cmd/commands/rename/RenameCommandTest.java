@@ -16,7 +16,7 @@ class RenameCommandTest {
 
     public static final String FILE_NACH_RENAMING = "hallo.nachher";
     public static final String FILE_VOR_RENAMING = "hallo.vorher";
-    public static final String BEREITS_EXISTIERENDES_FILE = "weiteres File";
+    public static final String BEREITS_EXISTIERENDES_FILE = "weiteres.file";
     public static final long LAST_MODIFIED = 0L;
 
     @Test
