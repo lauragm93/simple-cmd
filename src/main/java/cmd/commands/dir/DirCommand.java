@@ -3,6 +3,7 @@ package cmd.commands.dir;
 import cmd.SimpleCmd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 import java.io.File;
@@ -25,6 +26,9 @@ import static picocli.CommandLine.Option;
         mixinStandardHelpOptions = true)
 public class DirCommand implements Runnable {
 
+    @CommandLine.Parameters(index = "0", description = "path of the files and folders to list")
+    private static File anyLocation ;
+
     private static final Logger LOG = LoggerFactory.getLogger(DirCommand.class);
     @Option(names = {"-f", "--files"}, description = "print only file names, directories will not be listed")
     private boolean filesOnly;
@@ -38,7 +42,11 @@ public class DirCommand implements Runnable {
 
     @Override
     public void run() {
-        listFilesInDirectory(SimpleCmd.getCurrentLocation());
+        if (anyLocation.isDirectory()) {
+            listFilesInDirectory(anyLocation);
+        } else {
+            listFilesInDirectory(SimpleCmd.getCurrentLocation());
+        }
     }
 
     private void listFilesInDirectory(File directory) {
@@ -49,6 +57,7 @@ public class DirCommand implements Runnable {
             }
         }
     }
+
 
     private Comparator<String> getSortOrderAwareFileNameComparator(final String sortOrder) {
         if ("desc".equals(sortOrder)) {

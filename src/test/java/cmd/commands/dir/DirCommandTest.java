@@ -46,6 +46,21 @@ class DirCommandTest extends AbstractCommandTest {
         assertTrue(actual.contains(expected), "Expected : " + expected + " But was: " + actual);
     }
 
+    @Test
+    void testDirWithPath(@TempDir Path tempDir) throws IOException {
+        // given
+        prepareTestFolder(tempDir);
+        SimpleCmd.setCurrentLocation(tempDir.toFile());
+        String[] args = {tempDir.toAbsolutePath().toString()};
+        DirCommand dirCommand = CommandLine.populateCommand(new DirCommand(), args);
+        // when
+        dirCommand.run();
+        // then
+        String expected = tempDir.toAbsolutePath().toString();
+        String actual = getOutputStream().toString();
+        assertTrue(actual.contains(expected), "Expected : " + expected + " But was: " + actual);
+    }
+
     private void prepareTestFolder(@TempDir Path tempDir) throws IOException {
         // for other possible usages of @TempDir see https://www.baeldung.com/junit-5-temporary-directory
         Path myFile = tempDir.resolve("myFile.txt");
