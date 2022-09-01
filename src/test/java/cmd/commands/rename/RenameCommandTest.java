@@ -1,6 +1,7 @@
 package cmd.commands.rename;
 
 import cmd.SimpleCmd;
+import cmd.commands.AbstractCommandTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import picocli.CommandLine;
@@ -12,11 +13,11 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RenameCommandTest {
+class RenameCommandTest extends AbstractCommandTest {
 
     public static final String FILE_NACH_RENAMING = "hallo.nachher";
     public static final String FILE_VOR_RENAMING = "hallo.vorher";
-    public static final String BEREITS_EXISTIERENDES_FILE = "weiteres File";
+    public static final String BEREITS_EXISTIERENDES_FILE = "weiteres.file";
     public static final long LAST_MODIFIED = 0L;
 
     @Test
@@ -59,7 +60,7 @@ class RenameCommandTest {
         renameCommand.run();
         // then
         assertFalse(SimpleCmd.getCurrentLocation().toPath().resolve(FILE_NACH_RENAMING).toFile().exists());
-        assertTrue(SimpleCmd.getCurrentLocation().toPath().resolve(FILE_VOR_RENAMING).toFile().exists());
+        assertTrue(SimpleCmd.getCurrentLocation().toPath().resolve(FILE_VOR_RENAMING).toFile().exists(),FILE_VOR_RENAMING + "sollte existieren");
         assertTrue(SimpleCmd.getCurrentLocation().toPath().resolve(BEREITS_EXISTIERENDES_FILE).toFile().exists());
         assertEquals(LAST_MODIFIED, SimpleCmd.getCurrentLocation().toPath().resolve(BEREITS_EXISTIERENDES_FILE).toFile().lastModified());
     }

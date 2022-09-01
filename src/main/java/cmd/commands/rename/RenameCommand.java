@@ -42,7 +42,7 @@ public class RenameCommand implements Runnable{
             LOG.info("{} existiert nicht",fileToRename.getName());
             return false;
         }
-        if (newFile.exists()){
+        if (SimpleCmd.getCurrentLocation().toPath().resolve(newFile.toPath()).toFile().exists()){
             LOG.info("{} kann nicht in bereits existierende Datei/Verzeichnis ''{}'' umbenannt werden",fileToRename.getName(), newFile.getName());
             return false;
         }
