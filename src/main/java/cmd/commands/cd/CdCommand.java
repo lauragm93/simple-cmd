@@ -5,15 +5,11 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 
 /**
  * "Change Directory" command class
  * <p/>
  * Executing the command changes the current directory.
- * Optionally the.
  */
 @Command(
         name = "cd",
