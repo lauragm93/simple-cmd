@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -52,6 +53,37 @@ class DirCommandTest extends AbstractCommandTest {
         prepareTestFolder(tempDir);
         SimpleCmd.setCurrentLocation(tempDir.toFile());
         String[] args = {tempDir.toAbsolutePath().toString()};
+        DirCommand dirCommand = CommandLine.populateCommand(new DirCommand(), args);
+        // when
+        dirCommand.run();
+        // then
+        String expected = tempDir.toAbsolutePath().toString();
+        String actual = getOutputStream().toString();
+        assertTrue(actual.contains(expected), "Expected : " + expected + " But was: " + actual);
+    }
+
+    @Test
+    void testDirWithSortingDesc(@TempDir Path tempDir) throws IOException {
+        // given
+        prepareTestFolder(tempDir);
+        SimpleCmd.setCurrentLocation(tempDir.toFile());
+        String[] args = {"-s desc"};
+        DirCommand dirCommand = CommandLine.populateCommand(new DirCommand(), args);
+        // when
+        dirCommand.run();
+        // then
+        String expected = tempDir.toAbsolutePath().toString();
+        int array = getOutputStream().size();
+        String actual = getOutputStream().toString();
+        assertTrue(actual.contains(expected), "Expected : " + array + " But was: " + actual);
+    }
+
+    @Test
+    void testDirWithSortingAsc(@TempDir Path tempDir) throws IOException {
+        // given
+        prepareTestFolder(tempDir);
+        SimpleCmd.setCurrentLocation(tempDir.toFile());
+        String[] args = {"-s asc"};
         DirCommand dirCommand = CommandLine.populateCommand(new DirCommand(), args);
         // when
         dirCommand.run();
